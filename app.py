@@ -56,6 +56,17 @@ def render_top20():
     
     return render_template('top20.html', pool1=pool1, pool2=pool2)
 
+# Function to get top 10 players
+def get_top10_players(standings):
+    return standings[:10]
+
+# Function to render the top 10 players page
+def render_top10():
+    standings = get_standings()
+    top10_players = get_top10_players(standings)
+    
+    return render_template('top10.html', top10_players=top10_players)
+
 # Route for the index page
 @app.route('/')
 def index():
@@ -65,6 +76,11 @@ def index():
 @app.route('/top20')
 def top20():
     return render_top20()
+
+# Route for the top 10 players page
+@app.route('/top10')
+def top10():
+    return render_top10()
 
 # Run the Flask app
 if __name__ == '__main__':

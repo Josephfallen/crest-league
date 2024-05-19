@@ -1,54 +1,37 @@
 import sqlite3
 
-# Data to be inserted
-data = [
-    (16, 'QwiK'),
-    (50, 'Pan'),
-    (1, 'Vivid'),
-    (0, 'Who.SOLR'),
-    (32, 'Ikariii'),
-    (1, 'Bentley'),
-    (0, 'LonelyValentine'),
-    (69, 'Takito'),
-    (0, 'Fuecoco42'),
-    (2, 'Codiak'),
-    (0, 'Blabbbb'),
-    (0, 'M4p13'),
-    (12, 'BLADE.VGS'),
-    (0, 'Arronnite'),
-    (2, 'Hssonger'),
-    (0, 'arshiaarta'),
-    (0, 'Butter-'),
-    (0, 'Stun'),
-    (57, 'Nat1x'),
-    (0, 'Sneaki'),
-    (0, 'TOXIC'),
-    (0, 'Tyson_07'),
-    (0, 'III7Toast'),
-    (0, 'SVG10'),
-    (44, 'Basilmaz'),
-    (0, 'Epaza'),
-    (0, 'Micro'),
-    (0, 'RICHDGEB'),
-    (0, 'Malicious Panda'),
-    (0, 'Ares.VGS'),
-    (0, 'Sleepy'),
-    (0, 'Clubcracker'),
-    (0, 'IAmPancake'),
-    (0, 'ice'),
-    (0, 'Pulpos43'),
-    (31, 'ryze'),
+# Data to be inserted into the standings table
+team_data = [
+    ('QwiK', 19), ('Pan', 55), ('Vivid', 1), ('Who.SOLR', 2), ('Ikariii', 32),
+    ('Bentley', 5), ('LonelyValentine', 0), ('Takito', 84), ('Fuecoco42', 0),
+    ('Codiak', 17), ('Blabbbb', 0), ('M4p13', 0), ('BLADE.VGS', 12), ('Arronnite', 0),
+    ('Hssonger', 2), ('arshiaarta', 0), ('Butter-', 0), ('Stun', 0), ('Nat1x', 67),
+    ('Sneaki', 0), ('TOXIC', 0), ('Tyson_07', 0), ('III7Toast', 0), ('SVG10', 0),
+    ('Basilmaz', 54), ('Epaza', 6), ('Micro', 7), ('RICHDGEB', 0), ('Malicious Panda', 4),
+    ('Ares.VGS', 0), ('Sleepy', 0), ('Clubcracker', 0), ('IAmPancake', 0), ('ice', 0),
+    ('Pulpos43', 0), ('ryze', 31)
 ]
 
-# Connect to the database
+# Connect to the SQLite database (or create it if it doesn't exist)
 conn = sqlite3.connect('standings.db')
-c = conn.cursor()
+cursor = conn.cursor()
 
-# Clear existing data
-c.execute('DELETE FROM standings')
+# Drop the standings table if it exists
+cursor.execute('DROP TABLE IF EXISTS standings')
 
-# Insert new data
-c.executemany('INSERT INTO standings (points, team) VALUES (?, ?)', data)
+# Create the standings table
+cursor.execute('''
+    CREATE TABLE standings (
+        team TEXT PRIMARY KEY,
+        points INTEGER
+    )
+''')
 
+# Insert the team standings
+cursor.executemany('INSERT INTO standings (team, points) VALUES (?, ?)', team_data)
+
+# Commit the changes and close the connection
 conn.commit()
 conn.close()
+
+print("Team standings updated successfully.")
