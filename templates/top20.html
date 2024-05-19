@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 20 Players - 2 Pools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Add custom CSS for space gradient */
+        @font-face {
+            font-family: 'Obitron';
+            src: url('https://fonts.gstatic.com/s/obitron/v10/s6d56HoH.ttf') format('truetype');
+        }
+
+        body {
+            background: radial-gradient(circle, #000000, #000000, #010101);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff; /* Set default text color to white */
+            font-family: 'Obitron', sans-serif; /* Use Obitron font */
+        }
+        .container {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            padding: 40px; /* Increase padding for larger containers */
+            color: #ffffff; /* Set text color to white */
+            width: 80%; /* Adjust width as needed */
+            max-width: 1200px; /* Add max-width for responsiveness */
+        }
+        .pool {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            color: #ffffff; /* Set text color to white */
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Top 20 Players - 2 Pools</h1>
+        <h2>Pool 1</h2>
+        <div class="pool">
+            <table>
+                <tbody>
+                    {% for team, points in pool1 %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ team }}</td>
+                            <td>{{ points }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <h2>Pool 2</h2>
+        <div class="pool">
+            <table>
+                <tbody>
+                    {% for team, points in pool2 %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ team }}</td>
+                            <td>{{ points }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
